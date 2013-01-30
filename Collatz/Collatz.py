@@ -36,6 +36,7 @@ def collatz_eval (i, j, cache) :
     """
     assert i > 0
     assert j > 0
+    assert len(cache) > 0
     v = 0
 
     for k in xrange(min(i,j),(max(i,j)+1)) :
@@ -58,6 +59,7 @@ def collatz_cyclelength (n, cache):
     check cache for 
     """
     assert n > 0
+    assert len(cache) > 0
     c = 1
     if (n != 1) and (n < 333330) :
         if cache[n] != 0 :
@@ -65,21 +67,33 @@ def collatz_cyclelength (n, cache):
         else :
             if n % 2 == 0 :
                 cache[n/2] = collatz_cyclelength (n/2, cache)
-                return c + cache[n/2]
+                c = c + cache[n/2]
+                assert c > 0
+                return c
             else :
                 cache[3*n + 1] = collatz_cyclelength(3*n + 1, cache)
-                return c + cache[3*n + 1]
+                c = c + cache[3*n + 1]
+                assert c > 0
+                return c
     elif n != 1 :
         if (n % 2 == 0) and (n/2 < 999999):
                 cache[n/2] = collatz_cyclelength (n/2, cache)
-                return c + cache[n/2]
+                c = c + cache[n/2]
+                assert c > 0
+                return c
         elif n % 2 == 0 :
-                return c + collatz_cyclelength(n/2, cache)
+                c = c + collatz_cyclelength(n/2, cache)
+                assert c > 0
+                return c
         elif 3*n + 1 < 999999 :
                 cache[3*n + 1] = collatz_cyclelength(3*n + 1, cache)
-                return c + cache[3*n + 1]
+                c = c + cache[3*n + 1]
+                assert c > 0
+                return c 
         else :
-                return c + collatz_cyclelength(3*n + 1, cache)
+                c = c + collatz_cyclelength(3*n + 1, cache)
+                assert c > 0
+                return c
     
     else :
         cache[1] = 1
