@@ -90,7 +90,6 @@ def collatz_cyclelength (n, cache):
                 return c + cache[3*n + 1]
     
     else :
-        cache[1] = 1
         return 1   
         
 
@@ -120,6 +119,8 @@ def collatz_solve (r, w) :
     w is a writer
     """
     cache = [0] * 1000000
+    cache[1] = 1
+    cache[2] = 2
     a = [0, 0]
     while collatz_read(r, a) :
         v = collatz_eval(a[0], a[1], cache)

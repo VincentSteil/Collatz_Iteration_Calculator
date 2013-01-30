@@ -57,8 +57,9 @@ def collatz_cyclelength (n, cache):
     n odd : *3 +1
     check cache for 
     """
+    assert n > 0
     c = 1
-    if (n != 1) and (n < 333333) :
+    if (n != 1) and (n < 333330) :
         if cache[n] != 0 :
           return cache[n]
         else :
@@ -69,12 +70,16 @@ def collatz_cyclelength (n, cache):
                 cache[3*n + 1] = collatz_cyclelength(3*n + 1, cache)
                 return c + cache[3*n + 1]
     elif n != 1 :
-        if n % 2 == 0 :
+        if (n % 2 == 0) and (n/2 < 999999):
                 cache[n/2] = collatz_cyclelength (n/2, cache)
                 return c + cache[n/2]
-        else :
+        elif n % 2 == 0 :
+                return c + collatz_cyclelength(n/2, cache)
+        elif 3*n + 1 < 999999 :
                 cache[3*n + 1] = collatz_cyclelength(3*n + 1, cache)
                 return c + cache[3*n + 1]
+        else :
+                return c + collatz_cyclelength(3*n + 1, cache)
     
     else :
         cache[1] = 1
