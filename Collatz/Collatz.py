@@ -3,7 +3,7 @@
 # ---------------------------
 # projects/collatz/Collatz.py
 # Copyright (C) 2013
-# Glenn P. Downing
+# Glenn P. Downing & Vincent Steil 
 # ---------------------------
 
 # ------------
