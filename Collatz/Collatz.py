@@ -35,10 +35,9 @@ def collatz_eval (i, j) :
     """
     assert i > 0
     assert j > 0
-    k = min(i,j)   
-    n = max(i,j) 
     v = 1
-    while k != n+1 :
+
+    for k in xrange(min(i,j),(max(i,j)+1)) :
         l = collatz_cyclelength(k) 
         k += 1 
         if v < l :
