@@ -104,7 +104,8 @@ class TestCollatz (unittest.TestCase) :
         collatz_solve(r, w)
         self.assert_(w.getvalue() == "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n")
    
-   """ implement these later    
+"""
+     implement these later    
     def test_solve_2 (self) :
         r = StringIO.StringIO("1 10\n100 200\n201 210\n900 1000\n")
         w = StringIO.StringIO()
@@ -116,7 +117,7 @@ class TestCollatz (unittest.TestCase) :
         w = StringIO.StringIO()
         collatz_solve(r, w)
         self.assert_(w.getvalue() == "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n")
-    """
+"""
 # ----
 # main
 # ----
