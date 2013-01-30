@@ -11,10 +11,14 @@
 
 import sys
 
+#!/usr/bin/env python
 
-# ----
-# main
-# ----
+# ---------------------------
+# projects/collatz/Collatz.py
+# Copyright (C) 2013
+# Glenn P. Downing
+# ---------------------------
+
 # ------------
 # collatz_read
 # ------------
@@ -36,22 +40,20 @@ def collatz_read (r, a) :
     assert a[1] > 0
     return True
 
-def collatz_eval (i, j) :
+def collatz_eval (i, j, cache) :
     """
     i is the beginning of the range, inclusive
     j is the end       of the range, inclusive
     return the max cycle length in the range [i, j]
+    cache is an overarching list of cycle lengths for each index, initialized at 0
     """
     assert i > 0
     assert j > 0
-    k = min(i,j)   
-    n = max(i,j) 
-    v = 1
-    while k != n+1 :
-        l = collatz_cyclelength(k) 
-        k += 1 
-        if v < l :
-            v = l   
+    v = 0
+
+    for k in xrange(min(i,j),(max(i,j)+1)) :
+        l = collatz_cyclelength(k, cache)   
+        v = max(v,l)  
     assert v > 0
     return v
 
@@ -59,22 +61,37 @@ def collatz_eval (i, j) :
 # collatz_cyclelength
 # -------------
 
-def collatz_cyclelength (n):
+def collatz_cyclelength (n, cache):
     """
     n is the number for which the cycle length should be computed
     returns the cycle length
     start at c = 1 to account for first number
     n even : /2
     n odd : *3 +1
+    check cache for 
     """
     c = 1
-    while n != 1 :
-        if n % 2 == 0 :
-            n = n/2
+    if (n != 1) and (n < 333333) :
+        if cache[n] != 0 :
+          return cache[n]
         else :
-            n = 3*n + 1
-        c = c + 1
-    return c   
+            if n % 2 == 0 :
+                cache[n/2] = collatz_cyclelength (n/2, cache)
+                return c + cache[n/2]
+            else :
+                cache[3*n + 1] = collatz_cyclelength(3*n + 1, cache)
+                return c + cache[3*n + 1]
+    elif n != 1 :
+        if n % 2 == 0 :
+                cache[n/2] = collatz_cyclelength (n/2, cache)
+                return c + cache[n/2]
+        else :
+                cache[3*n + 1] = collatz_cyclelength(3*n + 1, cache)
+                return c + cache[3*n + 1]
+    
+    else :
+        cache[1] = 1
+        return 1   
         
 
 
@@ -102,17 +119,11 @@ def collatz_solve (r, w) :
     r is a reader
     w is a writer
     """
+    cache = [0] * 1000000
     a = [0, 0]
     while collatz_read(r, a) :
-        v = collatz_eval(a[0], a[1])
+        v = collatz_eval(a[0], a[1], cache)
         collatz_print(w, a[0], a[1], v)
-#!/usr/bin/env python
-
-# ------------------------------
-# projects/collatz/RunCollatz.py
-# Copyright (C) 2013
-# Glenn P. Downing
-# -------------------------------
 
 """
 To run the program

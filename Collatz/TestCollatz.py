@@ -44,44 +44,58 @@ class TestCollatz (unittest.TestCase) :
     # -----
     
     def test_cyclelength_1 (self):
-        v = collatz_cyclelength(22)
+        cache = [0] * 1000000
+        v = collatz_cyclelength(22, cache)
         self.assert_(v == 16, v)
         
     def test_cyclelength_2 (self):
-        v = collatz_cyclelength(5)
+        cache = [0] * 1000000
+        v = collatz_cyclelength(5, cache)
         self.assert_(v == 6, v)
         
     def test_cyclelength_3 (self):
-        v = collatz_cyclelength(4)
-        self.assert_(v == 3, v)
+        cache = [0] * 1000000
+        v = collatz_cyclelength(9, cache)
+        self.assert_(v == 20, v)
 
     # ----
     # eval
     # ----
 
     def test_eval_1 (self) :
-        v = collatz_eval(1, 10)
-        self.assert_(v == 20)
+        cache = [0] * 1000000
+        v = collatz_eval(1, 10, cache)
+        self.assert_(v == 20, v)
 
     def test_eval_2 (self) :
-        v = collatz_eval(100, 200)
-        self.assert_(v == 125)
+        cache = [0] * 1000000
+        v = collatz_eval(100, 200, cache)
+        self.assert_(v == 125, v)
 
     def test_eval_3 (self) :
-        v = collatz_eval(201, 210)
-        self.assert_(v == 89)
+        cache = [0] * 1000000
+        v = collatz_eval(201, 210, cache)
+        self.assert_(v == 89, v)
 
     def test_eval_4 (self) :
-        v = collatz_eval(900, 1000)
-        self.assert_(v == 174)
+        cache = [0] * 1000000
+        v = collatz_eval(900, 1000, cache)
+        self.assert_(v == 174, v)
         
     def test_eval_5 (self) :
-        v = collatz_eval(4, 4)
-        self.assert_(v == 3)
+        cache = [0] * 1000000
+        v = collatz_eval(4, 4, cache)
+        self.assert_(v == 3, v)
         
     def test_eval_6 (self) :
-        v = collatz_eval(1000, 900)
-        self.assert_(v == 174)
+        cache = [0] * 1000000
+        v = collatz_eval(1000, 900, cache)
+        self.assert_(v == 174, v)
+        
+    def test_eval_7 (self) :
+        cache = [0] * 1000000
+        v = collatz_eval(5, 7, cache)
+        self.assert_(v == 17, v)
 
 
     # -----
