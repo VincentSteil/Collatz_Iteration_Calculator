@@ -124,6 +124,7 @@ def collatz_solve (r, w) :
     read, eval, print loop
     r is a reader
     w is a writer
+    cache is an array with precalculated collatz iteration values used to successively speed up later calculations
     """
     cache = [0] * 1000000
     a = [0, 0]
