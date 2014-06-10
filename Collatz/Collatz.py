@@ -27,18 +27,19 @@ def collatz_read (r, a) :
     assert a[1] > 0
     return True
 
-def collatz_eval (i, j, cache) :
+def collatz_eval (i, j, cache):
     """
     i is the beginning of the range, inclusive
     j is the end       of the range, inclusive
     return the max cycle length in the range [i, j]
-    cache is an overarching list of cycle lengths for each index, initialized at 0
+    cache is an overarching dict of cycle lengths for each index, initialized at 0 
+    start at count c = 1 to account for first number
     """
     assert i > 0
     assert j > 0
     v = 0
 
-    for k in xrange(min(i,j),(max(i,j)+1)) :
+    for k in xrange(min(i,j),(max(i,j)+1)):
         l = collatz_cyclelength(k, cache)   
         v = max(v,l)  
     assert v > 0
@@ -48,42 +49,30 @@ def collatz_eval (i, j, cache) :
 # collatz_cyclelength
 # -------------
 
-def collatz_cyclelength (n, cache):
+def collatz_cyclelength (n, cache, c = 1):
     """
     n is the number for which the cycle length should be computed
     returns the cycle length
-    start at c = 1 to account for first number
     n even : /2
     n odd : *3 +1
-    check cache for 
+    check cache for precomputed values
+    c is count
     """
     assert n > 0
-    c = 1
-    if (n != 1) :
+    if n != 1:
         if n in cache :
           return cache[n]
         else :
             if n % 2 == 0 :
-                cache[n/2] = collatz_cyclelength (n/2, cache)
+                cache[n/2] = collatz_cyclelength (n/2, cache, c)
                 c = c + cache[n/2]
                 assert c > 0
                 return c
             else :
-                cache[3*n + 1] = collatz_cyclelength(3*n + 1, cache)
+                cache[3*n + 1] = collatz_cyclelength(3*n + 1, cache, c)
                 c = c + cache[3*n + 1]
                 assert c > 0
                 return c
-    elif n != 1 :
-        if (n % 2 == 0):
-                cache[n/2] = collatz_cyclelength (n/2, cache)
-                c = c + cache[n/2]
-                assert c > 0
-                return c
-        else :
-                c = c + collatz_cyclelength(3*n + 1, cache)
-                assert c > 0
-                return c
-    
     else :
         cache[1] = 1
         return 1   
