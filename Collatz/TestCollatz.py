@@ -80,42 +80,42 @@ class TestCollatz (unittest.TestCase) :
     # ----
 
     def test_eval_1 (self) :
-        cache = [0] * 1000000
+        cache = {}
         v = collatz_eval(1, 10, cache)
         self.assert_(v == 20, v)
 
     def test_eval_2 (self) :
-        cache = [0] * 1000000
+        cache = {}
         v = collatz_eval(100, 200, cache)
         self.assert_(v == 125, v)
 
     def test_eval_3 (self) :
-        cache = [0] * 1000000
+        cache = {}
         v = collatz_eval(201, 210, cache)
         self.assert_(v == 89, v)
 
     def test_eval_4 (self) :
-        cache = [0] * 1000000
+        cache = {}
         v = collatz_eval(900, 1000, cache)
         self.assert_(v == 174, v)
         
     def test_eval_5 (self) :
-        cache = [0] * 1000000
+        cache = {}
         v = collatz_eval(4, 4, cache)
         self.assert_(v == 3, v)
         
     def test_eval_6 (self) :
-        cache = [0] * 1000000
+        cache = {}
         v = collatz_eval(1000, 900, cache)
         self.assert_(v == 174, v)
         
     def test_eval_7 (self) :
-        cache = [0] * 1000000
+        cache = {}
         v = collatz_eval(5, 7, cache)
         self.assert_(v == 17, v)
         
     def test_eval_8 (self) :
-        cache = [0] * 1000000
+        cache = {}
         v = collatz_eval(900000, 900001, cache)
         self.assert_(v == 189, v)
 

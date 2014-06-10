@@ -36,7 +36,6 @@ def collatz_eval (i, j, cache) :
     """
     assert i > 0
     assert j > 0
-    assert len(cache) > 0
     v = 0
 
     for k in xrange(min(i,j),(max(i,j)+1)) :
@@ -59,10 +58,9 @@ def collatz_cyclelength (n, cache):
     check cache for 
     """
     assert n > 0
-    assert len(cache) > 0
     c = 1
-    if (n != 1) and (n < 333330) :
-        if cache[n] != 0 :
+    if (n != 1) :
+        if n in cache :
           return cache[n]
         else :
             if n % 2 == 0 :
@@ -76,20 +74,11 @@ def collatz_cyclelength (n, cache):
                 assert c > 0
                 return c
     elif n != 1 :
-        if (n % 2 == 0) and (n/2 < 999999):
+        if (n % 2 == 0):
                 cache[n/2] = collatz_cyclelength (n/2, cache)
                 c = c + cache[n/2]
                 assert c > 0
                 return c
-        elif n % 2 == 0 :
-                c = c + collatz_cyclelength(n/2, cache)
-                assert c > 0
-                return c
-        elif 3*n + 1 < 999999 :
-                cache[3*n + 1] = collatz_cyclelength(3*n + 1, cache)
-                c = c + cache[3*n + 1]
-                assert c > 0
-                return c 
         else :
                 c = c + collatz_cyclelength(3*n + 1, cache)
                 assert c > 0
@@ -124,9 +113,9 @@ def collatz_solve (r, w) :
     read, eval, print loop
     r is a reader
     w is a writer
-    cache is an array with precalculated collatz iteration values used to successively speed up later calculations
+    cache is an dictionary with precalculated collatz iteration values used to successively speed up later calculations
     """
-    cache = [0] * 1000000
+    cache = {}
     a = [0, 0]
     while collatz_read(r, a) :
         v = collatz_eval(a[0], a[1], cache)
